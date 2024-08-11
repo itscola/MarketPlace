@@ -1,9 +1,6 @@
 name: MarketPlace CD - Java 8 with Kotlin
 
-on:
-  push:
-    tags:
-      - '[0-9]+\.[0-9]+\.[0-9]+'
+on: [push, pull_request]
 
 jobs:
   release:
@@ -24,23 +21,11 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle - Compile plugin with 1.12.2
         run: ./gradlew clean build -PbuildVersion=1.12.2 -DtagVersion=${{ steps.get_version.outputs.VERSION }}
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: List files in build/libs
+        run: ls -la build/libs
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          draft: false
-          prerelease: false
-      - name: Upload Release Jar
-        id: upload-release-jar
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/MarketPlace.jar
-          asset_name: MarketPlace-${{ steps.get_version.outputs.VERSION }}.jar
-          asset_content_type: application/java-archive
+          name: build-artifacts
+          path: build/libs/*.jar  # Update this path as needed
