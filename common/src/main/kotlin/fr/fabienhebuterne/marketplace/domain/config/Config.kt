@@ -39,9 +39,9 @@ enum class DatabaseType {
 
 @Serializable
 data class Expiration(
-    val playerToListings: Long = 604800,
+    val playerToListings: Long = 8640000,
     val listingsToMailsEnabled: Boolean = true,
-    val listingsToMails: Long = 604800,
+    val listingsToMails: Long = 8640000,
     val listingsToMailsNotifCommand: List<String>,
     val mailsToDeleteEnabled: Boolean = true,
     val mailsToDeleteNotifCommand: List<String>
