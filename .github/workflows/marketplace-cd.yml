@@ -21,11 +21,11 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle - Compile plugin with 1.12.2
         run: ./gradlew clean build -PbuildVersion=1.12.2 -DtagVersion=${{ steps.get_version.outputs.VERSION }}
-      - name: List files in build/libs
-        run: ls -la build/libs
+      - name: List files in build
+        run: ls -la .build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: build/libs/*.jar  # Update this path as needed
+          path: .build/*.jar  # Update this path as needed
