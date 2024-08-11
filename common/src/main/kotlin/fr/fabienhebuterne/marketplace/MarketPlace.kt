@@ -82,7 +82,7 @@ class MarketPlace(override var loader: JavaPlugin) : BootstrapLoader {
         }
 
         configService = DefaultConfigService(this.instance, "config")
-        configService.createAndLoadConfig(true)
+        configService.createAndLoadConfig(false)
         conf = configService.getSerialization()
 
         translation = TranslationConfigService(this.instance, "translation-${conf.language}")
